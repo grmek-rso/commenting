@@ -39,11 +39,6 @@ kumuluzee:
                   </Configuration>'
 
 configuration-properties:
-  demo-etcd-parameter: file
-  demo-service-is-healthy: true
   db-url: jdbc:mysql://10.67.0.3:3306/commenting
   db-user: root
   db-password: lPKKoBPxlnzhkkrn
-  gcp-project: grmek-rso
-  gcp-key: <hidden>
-  gcp-storage-bucket: grmek-rso-storage-bucket
