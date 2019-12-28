@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("")
+@Path("comments")
 @Log
 public class CommentResource {
 
@@ -23,10 +23,9 @@ public class CommentResource {
     private ConfigurationProperties cfg;
 
     @POST
-    @Path("users/{userId}/albums/{albumId}/images/{imageId}")
-    public Response addNewComment(@PathParam("userId") int userId,
-                                  @PathParam("albumId") int albumId,
-                                  @PathParam("imageId") int imageId,
+    public Response addNewComment(@QueryParam("user") int userId,
+                                  @QueryParam("album") int albumId,
+                                  @QueryParam("image") int imageId,
                                   Comment comment) {
         try (
             Connection con = DriverManager.getConnection(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
@@ -45,10 +44,9 @@ public class CommentResource {
     }
     
     @GET
-    @Path("users/{userId}/albums/{albumId}/images/{imageId}")
-    public Response getComments(@PathParam("userId") int userId,
-                                @PathParam("albumId") int albumId,
-                                @PathParam("imageId") int imageId) {
+    public Response getComments(@QueryParam("user") int userId,
+                                @QueryParam("album") int albumId,
+                                @QueryParam("image") int imageId) {
         List<Comment> comments = new LinkedList<Comment>();
 
         try (
@@ -74,8 +72,8 @@ public class CommentResource {
     }
 
     @DELETE
-    @Path("users/{userId}")
-    public Response deleteCommentsForUser(@PathParam("userId") int userId) {
+    @Path("user-clean-up")
+    public Response deleteCommentsForUser(@QueryParam("user") int userId) {
         try (
             Connection con = DriverManager.getConnection(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
             Statement stmt = con.createStatement();
@@ -92,8 +90,8 @@ public class CommentResource {
     }
 
     @DELETE
-    @Path("albums/{albumId}")
-    public Response deleteCommentsForAlbum(@PathParam("albumId") int albumId) {
+    @Path("album-clean-up")
+    public Response deleteCommentsForAlbum(@QueryParam("album") int albumId) {
         try (
                 Connection con = DriverManager.getConnection(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
                 Statement stmt = con.createStatement();
@@ -109,8 +107,8 @@ public class CommentResource {
     }
 
     @DELETE
-    @Path("images/{imageId}")
-    public Response deleteCommentsForImage(@PathParam("imageId") int imageId) {
+    @Path("image-clean-up")
+    public Response deleteCommentsForImage(@QueryParam("image") int imageId) {
         try (
                 Connection con = DriverManager.getConnection(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
                 Statement stmt = con.createStatement();

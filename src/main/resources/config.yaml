@@ -14,10 +14,6 @@ kumuluzee:
     checks:
       etcd-health-check:
         connection-url: http://etcd:2379/health
-  metrics:
-    web-instrumentation:
-      - name: users-endpoint
-        url-pattern: /v1/users/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                   <Configuration name="commenting">
