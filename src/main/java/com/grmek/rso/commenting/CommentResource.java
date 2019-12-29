@@ -72,6 +72,22 @@ public class CommentResource {
     }
 
     @DELETE
+    public Response deleteComment(@QueryParam("id") int commentId) {
+        try (
+            Connection con = DriverManager.getConnection(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
+            Statement stmt = con.createStatement();
+        ) {
+            stmt.executeUpdate("DELETE FROM comments WHERE id = " + commentId);
+        }
+        catch (SQLException e) {
+            System.err.println(e);
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        return Response.noContent().build();
+    }
+
+    @DELETE
     @Path("user-clean-up")
     public Response deleteCommentsForUser(@QueryParam("user") int userId) {
         try (
